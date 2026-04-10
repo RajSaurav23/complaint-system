@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JanSeva - Home</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* ===== WATERMARK LOGO ===== */
+        .bg-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.08;
+            z-index: 0;
+        }
+
+        .bg-logo img {
+            width: 500px;
+        }
+
+        /* ===== CENTER CONTENT ===== */
+        .container {
+            position: relative;
+            z-index: 1;
+            height: auto;
+            padding: 60px 20px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            text-align: center;
+        }
+
+        .main-logo img {
+            width: 120px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin: 10px 0;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        /* ===== BUTTONS ===== */
+        .buttons {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .home-btn { background: #00e5ff; }
+        .login-btn { background: #00c853; }
+        .register-btn { background: #ff1744; }
+
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+        }
+
+        /* ===== PREMIUM FOOTER ===== */
+        .footer {
+            width: 100%;
+            padding: 20px 10px;
+            backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.35);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            position: relative;
+        }
+
+        .footer-links {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #fff;
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 13px;
+            position: relative;
+        }
+
+        /* 🔥 hover upgrade */
+        .footer-links a:hover {
+            color: #00e5ff;
+        }
+
+        .footer-links a::after {
+            content: "";
+            display: block;
+            width: 0%;
+            height: 2px;
+            background: #00e5ff;
+            transition: 0.3s;
+            margin: auto;
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        .footer-desc {
+            max-width: 750px;
+            margin: auto;
+            font-size: 13px;
+            opacity: 0.85;
+            line-height: 1.5;
+        }
+
+        .footer-update {
+            margin-top: 8px;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .footer-logo {
+            height: 45px;
+            position: absolute;
+            right: 15px;
+            bottom: 15px;
+            opacity: 0.9;
+        }
+
+        /* 📱 MOBILE RESPONSIVE */
+        @media (max-width: 600px) {
+            .buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .footer-logo {
+                position: static;
+                margin-top: 10px;
+            }
+
+            .footer-links a {
+                display: inline-block;
+                margin: 5px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- BACKGROUND WATERMARK -->
+<div class="bg-logo">
+    <img src="logo.png">
+</div>
+
+<!-- CENTER CONTENT -->
+<div class="container">
+
+    <div class="main-logo">
+        <img src="logo.png" alt="JanSeva Logo">
+    </div>
+
+    <h1>Welcome to JanSeva</h1>
+    <p>Report issues and make your city better</p>
+
+    <div class="buttons">
+        <a href="index.html" class="btn home-btn">Home</a>
+        <a href="login.html" class="btn login-btn">Login</a>
+        <a href="register.html" class="btn register-btn">Register</a>
+    </div>
+
+</div>
+
+<!-- 🔥 FOOTER -->
+<div class="footer">
+
+    <!-- ✅ REAL LINKS -->
+    <div class="footer-links">
+        <a href="about.html">About Us</a>
+        <a href="help.html">Help</a>
+        <a href="terms.html">Terms & Conditions</a>
+        <a href="sitemap.html">Site Map</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="contact.html">Contact Us</a>
+          <a href="feedback.html">Feedback</a>
+    </div>
+
+    <div class="footer-desc">
+        This is the Complaint Management Portal developed to provide a single platform for users to register and track complaints efficiently. 
+        This system helps users to raise issues related to electricity, water, roads, and more, and ensures proper tracking and resolution.
+        
+        <!-- ✅ GOV LINE -->
+        <div style="margin-top:10px; font-size:12px; opacity:0.7;">
+            © <span id="year"></span> JanSeva Portal | Government Complaint System | All Rights Reserved | Saurav Raj
+        </div>
+    </div>
+
+    <div class="footer-update">
+        Last Updated: <span id="lastUpdated"></span>
+    </div>
+
+    <img src="logo.png" class="footer-logo">
+
+</div>
+
+<script>
+    document.getElementById("lastUpdated").innerText = new Date().toDateString();
+    document.getElementById("year").innerText = new Date().getFullYear();
+</script>
+
+</body>
+</html>

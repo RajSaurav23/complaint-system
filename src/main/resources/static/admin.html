@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI';
+            background: linear-gradient(135deg,#1e3c72,#2a5298);
+            color: white;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 30px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h2 {
+            margin: 0;
+        }
+
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 3px;
+        }
+
+        .logout { background: #ff1744; color: white; }
+        .reload { background: #00c853; color: white; }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        #welcome {
+            margin-left: 20px;
+        }
+
+        .container {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(12px);
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+
+        .title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .status {
+            margin: 5px 0;
+            font-weight: bold;
+        }
+
+        .pending { color: orange; }
+        .progress { color: cyan; }
+        .resolved { color: lightgreen; }
+
+        .btn-resolve { background: green; color: white; }
+        .btn-pending { background: orange; color: white; }
+        .btn-progress { background: blue; color: white; }
+        .btn-delete { background: red; color: white; }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h2>👨‍💼 Admin Dashboard</h2>
+    <div>
+        <!-- ✅ Added Feedback Button -->
+        <button onclick="openFeedback()">📩 Feedback</button>
+
+        <button class="reload" onclick="loadComplaints()">Reload</button>
+        <button class="logout" onclick="logout()">Logout</button>
+    </div>
+</div>
+
+<p id="welcome"></p>
+
+<div class="container" id="list"></div>
+
+<script>
+
+/* ================= ROLE CHECK ================= */
+let role = localStorage.getItem("role");
+let user = localStorage.getItem("user");
+
+if(role !== "admin"){
+    alert("Access Denied ❌");
+    window.location.href = "login.html";
+}
+
+/* ================= WELCOME ================= */
+if(user){
+    document.getElementById("welcome").innerText = "Welcome Admin: " + user;
+}
+
+/* ================= LOAD ================= */
+function loadComplaints(){
+
+    fetch("http://localhost:8081/complaint/all")
+    .then(res => res.json())
+    .then(data => {
+
+        let container = document.getElementById("list");
+        container.innerHTML = "";
+
+        if(data.length === 0){
+            container.innerHTML = "<h3>No complaints found</h3>";
+            return;
+        }
+
+        data.forEach(c => {
+
+            let card = document.createElement("div");
+            card.className = "card";
+
+            let status = (c.status || "").toUpperCase();
+
+            let statusClass = "";
+            if(status === "PENDING") statusClass = "pending";
+            else if(status === "IN_PROGRESS") statusClass = "progress";
+            else if(status === "RESOLVED") statusClass = "resolved";
+
+            card.innerHTML = `
+                <div class="title">👤 ${c.name}</div>
+                <div>📧 ${c.email || "N/A"}</div>
+                <div>📝 ${c.issue}</div>
+                <div>📄 ${c.description || ""}</div>
+                <div class="status ${statusClass}">Status: ${status}</div>
+            `;
+
+            let resolveBtn = document.createElement("button");
+            resolveBtn.innerText = "Resolve";
+            resolveBtn.className = "btn-resolve";
+            resolveBtn.onclick = () => updateStatus(c.id, "RESOLVED");
+
+            let pendingBtn = document.createElement("button");
+            pendingBtn.innerText = "Pending";
+            pendingBtn.className = "btn-pending";
+            pendingBtn.onclick = () => updateStatus(c.id, "PENDING");
+
+            let progressBtn = document.createElement("button");
+            progressBtn.innerText = "In Progress";
+            progressBtn.className = "btn-progress";
+            progressBtn.onclick = () => updateStatus(c.id, "IN_PROGRESS");
+
+            let deleteBtn = document.createElement("button");
+            deleteBtn.className = "btn-delete";
+
+            if(status === "RESOLVED"){
+                deleteBtn.innerText = "Delete";
+                deleteBtn.addEventListener("click", function(){
+                    deleteComplaint(c.id);
+                });
+            } else {
+                deleteBtn.innerText = "Delete (Resolve first)";
+                deleteBtn.disabled = true;
+            }
+
+            card.appendChild(resolveBtn);
+            card.appendChild(pendingBtn);
+            card.appendChild(progressBtn);
+            card.appendChild(deleteBtn);
+
+            container.appendChild(card);
+        });
+    })
+    .catch(()=>{
+        alert("Error loading ❌");
+    });
+}
+
+/* ================= STATUS ================= */
+function updateStatus(id, status){
+
+    fetch(`http://localhost:8081/complaint/update/${id}/${status}`,{
+        method:"PUT"
+    })
+    .then(res => res.text())
+    .then(msg => {
+        alert(msg);
+        loadComplaints();
+    })
+    .catch(()=>{
+        alert("Update Failed ❌");
+    });
+}
+
+/* ================= DELETE ================= */
+function deleteComplaint(id){
+
+    console.log("Deleting ID:", id);
+
+    if(!confirm("Delete this complaint?")) return;
+
+    fetch(`http://localhost:8081/complaint/delete/${id}`,{
+        method:"DELETE"
+    })
+    .then(res => res.text())
+    .then(msg => {
+        alert(msg);
+        loadComplaints();
+    })
+    .catch(()=>{
+        alert("Delete Failed ❌");
+    });
+}
+
+/* ================= NEW FUNCTION (ADDED) ================= */
+function openFeedback(){
+    window.location.href = "feedback-admin.html";
+}
+
+/* ================= LOGOUT ================= */
+function logout(){
+    localStorage.clear();
+    alert("Logged out ✅");
+    window.location.href = "login.html";
+}
+
+/* ================= AUTO LOAD ================= */
+window.onload = loadComplaints;
+
+</script>
+
+</body>
+</html>

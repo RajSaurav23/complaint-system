@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About the Portal - JanSeva</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f6f9;
+}
+
+/* HEADER */
+.header {
+    background: #1f4e9e;
+    color: white;
+    padding: 15px 40px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* BREADCRUMB */
+.breadcrumb {
+    padding: 15px 40px;
+    font-size: 14px;
+    color: gray;
+}
+
+/* CONTAINER */
+.container {
+    padding: 20px 40px;
+}
+
+/* TITLE */
+h1 {
+    font-size: 40px;
+    color: #2c3e50;
+}
+
+.section-title {
+    font-size: 22px;
+    color: #1f4e9e;
+    margin-top: 25px;
+}
+
+.line {
+    height: 2px;
+    background: #ddd;
+    margin: 15px 0 25px;
+}
+
+p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: #333;
+}
+
+ul {
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+/* FOOTER */
+.footer {
+    margin-top: 40px;
+    padding: 20px;
+    text-align: center;
+    background: #222;
+    color: white;
+}
+
+.footer a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: #00e5ff;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+JanSeva Complaint Portal
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+    Home >> About the Portal
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+
+    <h1>About the Portal</h1>
+    <div class="line"></div>
+
+    <!-- PDF CONTENT -->
+    <h3 class="section-title">Abstract</h3>
+    <p>This project focuses on building a complaint management system with AI integration.</p>
+
+    <h3 class="section-title">Introduction</h3>
+    <p>The system allows users to register complaints and track them efficiently.</p>
+
+    <h3 class="section-title">Problem Statement</h3>
+    <p>Traditional complaint systems lack transparency and speed.</p>
+
+    <h3 class="section-title">Proposed System</h3>
+    <p>A web-based complaint system using Spring Boot and MySQL.</p>
+
+    <h3 class="section-title">Methodology</h3>
+    <p>User submits complaint → Backend processes → Admin resolves.</p>
+
+    <h3 class="section-title">Features</h3>
+    <p>User login, Admin dashboard, Complaint tracking, Image upload, GPS tracking.</p>
+
+    <h3 class="section-title">Technology Used</h3>
+    <p>HTML, CSS, JavaScript, Spring Boot, MySQL.</p>
+
+    <h3 class="section-title">Advantages</h3>
+    <p>Faster resolution, transparency, digital tracking.</p>
+
+    <h3 class="section-title">Conclusion</h3>
+    <p>The system improves complaint handling and user satisfaction.</p>
+
+    <!-- EXTRA PROFESSIONAL SECTIONS -->
+
+    <h3 class="section-title">Vision & Mission</h3>
+    <p>
+        Our vision is to create a transparent and efficient complaint resolution system for citizens.
+        Our mission is to use technology and AI to ensure faster issue resolution and better governance.
+    </p>
+
+    <h3 class="section-title">Objectives</h3>
+    <ul>
+        <li>Provide a single platform for complaint registration</li>
+        <li>Improve transparency in public services</li>
+        <li>Enable real-time complaint tracking</li>
+        <li>Ensure accountability of authorities</li>
+    </ul>
+
+    <h3 class="section-title">How It Works</h3>
+    <p>
+        Step 1: User registers complaint<br>
+        Step 2: Complaint stored in database<br>
+        Step 3: Admin reviews complaint<br>
+        Step 4: Action taken and status updated<br>
+        Step 5: User tracks resolution status
+    </p>
+
+    <h3 class="section-title">Key Features</h3>
+    <ul>
+        <li>User Login & Registration</li>
+        <li>Complaint Submission</li>
+        <li>Image Upload Support</li>
+        <li>Real-time Status Tracking</li>
+        <li>Admin Dashboard</li>
+        <li>AI-based Insights</li>
+    </ul>
+
+    <h3 class="section-title">Benefits to Citizens</h3>
+    <p>
+        Citizens can easily report issues and track their status without visiting offices.
+        This reduces time, increases transparency, and improves service quality.
+    </p>
+
+    <h3 class="section-title">Future Scope</h3>
+    <p>
+        The system can be enhanced using AI to automatically categorize complaints,
+        predict problem areas, and provide smart solutions to authorities.
+    </p>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <a href="about.html">About</a>
+    <a href="help.html">Help</a>
+    <a href="terms.html">Terms</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="contact.html">Contact</a>
+
+    <p style="margin-top:10px;">
+        © <span id="year"></span> JanSeva Portal | Government Complaint System
+    </p>
+</div>
+
+<script>
+document.getElementById("year").innerText = new Date().getFullYear();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Feedback Admin</title>
+
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #1f4e9e, #4facfe);
+}
+
+/* Container */
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Heading */
+h2 {
+    text-align: center;
+    color: #1f4e9e;
+    margin-bottom: 20px;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+/* Header */
+th {
+    background: #1f4e9e;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+/* Rows */
+td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Zebra striping */
+tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+/* Hover effect */
+tr:hover {
+    background: #eef3ff;
+    transition: 0.3s;
+}
+
+/* Responsive scroll */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+<h2>📋 All Feedback</h2>
+
+<div class="table-wrapper">
+<table>
+<tr>
+<th>👤 Name</th>
+<th>📧 Email</th>
+<th>📝 Message</th>
+<th>⭐ Rating</th>
+</tr>
+
+<tbody id="data"></tbody>
+</table>
+</div>
+</div>
+
+<script>
+fetch("http://localhost:8081/feedback")
+.then(res=>res.json())
+.then(data=>{
+    let rows="";
+    data.forEach(f=>{
+        rows+=`<tr>
+        <td>${f.name}</td>
+        <td>${f.email}</td>
+        <td>${f.message}</td>
+        <td>${f.rating}</td>
+        </tr>`;
+    });
+    document.getElementById("data").innerHTML=rows;
+});
+</script>
+
+</body>
+</html>

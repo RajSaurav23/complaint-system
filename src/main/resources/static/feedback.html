@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Feedback</title>
+
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #1f4e9e, #4facfe);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 420px;
+    margin: 60px auto;
+    background: white;
+    padding: 25px 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #1f4e9e;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: #1f4e9e;
+    box-shadow: 0 0 5px rgba(31,78,158,0.3);
+}
+
+textarea {
+    resize: none;
+    height: 100px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #1f4e9e, #4facfe);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #163d7a, #3a8be0);
+    transform: scale(1.02);
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+<h2>💬 Feedback Form</h2>
+
+<input id="name" placeholder="👤 Name">
+<div id="nameError" class="error"></div>
+
+<input id="email" placeholder="📧 Email">
+<div id="emailError" class="error"></div>
+
+<textarea id="message" placeholder="📝 Describe your experience"></textarea>
+
+<select id="rating">
+<option value="">⭐ Rating</option>
+<option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+<option value="4">⭐⭐⭐⭐ Good</option>
+<option value="3">⭐⭐⭐ Average</option>
+<option value="2">⭐⭐ Poor</option>
+<option value="1">⭐ Very Bad</option>
+</select>
+
+<button onclick="submitFeedback()">Submit</button>
+</div>
+
+<script>
+function submitFeedback(){
+
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let message = document.getElementById("message").value;
+    let rating = document.getElementById("rating").value;
+
+    let valid = true;
+
+    if(name === ""){
+        document.getElementById("nameError").innerText="Name required";
+        valid=false;
+    } else document.getElementById("nameError").innerText="";
+
+    if(!email.includes("@")){
+        document.getElementById("emailError").innerText="Valid email required";
+        valid=false;
+    } else document.getElementById("emailError").innerText="";
+
+    if(!valid) return;
+
+    fetch("http://localhost:8081/feedback", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({
+            name:name,
+            email:email,
+            message:message,
+            rating:rating
+        })
+    })
+    .then(res=>res.text())
+    .then(msg=>{
+        alert(msg);
+    })
+    .catch(()=> alert("Error ❌"));
+}
+</script>
+
+</body>
+</html>

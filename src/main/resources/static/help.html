@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Help - JanSeva</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f6f9;
+}
+
+/* HEADER */
+.header {
+    background: #1f4e9e;
+    color: white;
+    padding: 15px 40px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* BREADCRUMB */
+.breadcrumb {
+    padding: 15px 40px;
+    font-size: 14px;
+    color: gray;
+}
+
+/* CONTAINER */
+.container {
+    padding: 20px 40px;
+}
+
+h1 {
+    font-size: 40px;
+    color: #2c3e50;
+}
+
+.section-title {
+    font-size: 22px;
+    color: #1f4e9e;
+    margin-top: 25px;
+}
+
+.line {
+    height: 2px;
+    background: #ddd;
+    margin: 15px 0 25px;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th {
+    background: #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+/* FOOTER */
+.footer {
+    margin-top: 40px;
+    padding: 20px;
+    text-align: center;
+    background: #222;
+    color: white;
+}
+
+.footer a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: #00e5ff;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+JanSeva Complaint Portal
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+    Home >> Help
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+
+    <h1>Help</h1>
+    <div class="line"></div>
+
+    <!-- HOW TO USE -->
+    <h3 class="section-title">How to Use the Portal</h3>
+    <p>
+        Step 1: Register/Login into the portal.<br>
+        Step 2: Click on "Register Complaint".<br>
+        Step 3: Fill complaint details and upload image (if required).<br>
+        Step 4: Submit complaint.<br>
+        Step 5: Track complaint status from dashboard.
+    </p>
+
+    <!-- FILE FORMAT -->
+    <h3 class="section-title">File Format Information</h3>
+    <p>
+        Some documents on this portal are available in different formats. You may need the following software:
+    </p>
+
+    <table>
+        <tr>
+            <th>Document Type</th>
+            <th>Required Software</th>
+        </tr>
+        <tr>
+            <td>PDF</td>
+            <td>Adobe Acrobat Reader</td>
+        </tr>
+        <tr>
+            <td>Word</td>
+            <td>MS Word / Word Viewer</td>
+        </tr>
+        <tr>
+            <td>Excel</td>
+            <td>MS Excel</td>
+        </tr>
+    </table>
+
+    <!-- SCREEN READER -->
+    <h3 class="section-title">Screen Reader Access</h3>
+    <p>
+        This website supports accessibility tools such as screen readers for visually impaired users.
+    </p>
+
+    <table>
+        <tr>
+            <th>Screen Reader</th>
+            <th>Website</th>
+            <th>Type</th>
+        </tr>
+        <tr>
+            <td>NVDA</td>
+            <td>www.nvaccess.org</td>
+            <td>Free</td>
+        </tr>
+        <tr>
+            <td>JAWS</td>
+            <td>www.freedomscientific.com</td>
+            <td>Paid</td>
+        </tr>
+    </table>
+
+    <!-- FAQ -->
+    <h3 class="section-title">Frequently Asked Questions</h3>
+    <p>
+        <strong>Q: How can I track my complaint?</strong><br>
+        A: Login and go to dashboard.<br><br>
+
+        <strong>Q: Can I upload images?</strong><br>
+        A: Yes, image upload is supported.<br><br>
+
+        <strong>Q: How long does resolution take?</strong><br>
+        A: It depends on complaint type but is processed as soon as possible.
+    </p>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <a href="about.html">About</a>
+    <a href="help.html">Help</a>
+    <a href="terms.html">Terms</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="contact.html">Contact</a>
+
+    <p style="margin-top:10px;">
+        © <span id="year"></span> JanSeva Portal
+    </p>
+</div>
+
+<script>
+document.getElementById("year").innerText = new Date().getFullYear();
+</script>
+
+</body>
+</html>

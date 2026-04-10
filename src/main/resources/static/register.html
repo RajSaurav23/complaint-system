@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="left-panel">
+        <h1>Join Us Today!</h1>
+        <p>Create your account</p>
+    </div>
+
+    <div class="right-panel">
+
+        <div class="logo">
+            <img src="logo.png">
+        </div>
+
+        <h2>Create Account</h2>
+
+        <input type="text" id="name" placeholder="Enter Name">
+        <input type="email" id="email" placeholder="Enter Email">
+        <input type="password" id="password" placeholder="Enter Password">
+
+        <select id="role">
+            <option value="USER">User</option>
+            <option value="ADMIN">Admin</option>
+        </select>
+
+        <!-- ✅ FIXED -->
+        <button onclick="registerUser()">Register</button>
+
+        <p>Already have account? <a href="login.html">Login</a></p>
+
+    </div>
+
+</div>
+
+<script>
+
+// 🔹 OLD FUNCTION (kept, but improved)
+function register(){
+
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    // 🔥 UPDATED: now role comes from dropdown
+    let role = document.getElementById("role").value;
+
+    let data = {
+        name: name,
+        email: email,
+        password: password,
+        role: role
+    };
+
+    console.log("Sending Data (register):", data); // ✅ DEBUG
+
+    fetch("http://localhost:8081/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+    .then(res => res.text())
+    .then(msg => {
+        console.log("Response:", msg); // ✅ DEBUG
+        alert("Registered Successfully ✅");
+        window.location.href = "login.html";
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Registration Failed ❌");
+    });
+}
+
+
+// 🔹 MAIN FUNCTION (already used by button)
+function registerUser() {
+
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let password = document.getElementById("password").value.trim();
+    let role = document.getElementById("role").value;
+
+    if (!name || !email || !password) {
+        alert("⚠️ Please fill all fields");
+        return;
+    }
+
+    let data = {
+        name: name,
+        email: email,
+        password: password,
+        role: role
+    };
+
+    console.log("Sending Data (registerUser):", data); // ✅ DEBUG
+
+    fetch("http://localhost:8081/user/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+    .then(res => res.text())
+    .then((msg) => {
+        console.log("Response:", msg); // ✅ DEBUG
+        alert("Registered Successfully ✅");
+        window.location.href = "login.html";
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Registration Failed ❌");
+    });
+}
+
+</script>
+
+</body>
+</html>

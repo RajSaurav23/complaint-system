@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New Complaint</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+        }
+
+        .navbar {
+            background: rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navbar a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+        }
+
+        .container {
+            width: 55%;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            text-align: center;
+            color: #1e3c72;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            margin-bottom: 18px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        textarea { height: 110px; }
+
+        .gps-box {
+            border: 2px dashed #2ecc71;
+            background: #eafaf1;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .camera-box {
+            border: 2px dashed #f39c12;
+            background: #fff8e6;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        video, img {
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 12px;
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .submit-btn {
+            background: #2c7be5;
+            color: white;
+        }
+
+        .camera-btn {
+            background: #27ae60;
+            color: white;
+        }
+
+        .gps-btn {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .loading {
+            text-align: center;
+            color: green;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <div>Complaint Management</div>
+    <div>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="login.html" onclick="logout()">Logout</a>
+    </div>
+</div>
+
+<div class="container">
+
+    <h2>Submit New Complaint</h2>
+
+    <label>Name</label>
+    <input type="text" id="name">
+
+    <label>Email</label>
+    <input type="email" id="email">
+
+    <!-- ✅ UPDATED DROPDOWN -->
+    <label>Issue</label>
+    <select id="issue">
+        <option value="">-- Select Issue --</option>
+        <option value="WATER">Water</option>
+        <option value="ELECTRIC">Electric</option>
+        <option value="ROAD">Road</option>
+        <option value="GARBAGE">Garbage</option>
+    </select>
+
+    <label>Description</label>
+    <textarea id="description"></textarea>
+
+    <!-- GPS -->
+    <div class="gps-box">
+        <h4>📍 Capture GPS Location</h4>
+        <button class="gps-btn" onclick="getLocation()">Get Location</button>
+        <p id="locationText">Location not captured</p>
+    </div>
+
+    <!-- CAMERA -->
+    <div class="camera-box">
+        <h4>📷 Capture Photo</h4>
+
+        <button class="camera-btn" onclick="startCamera()">Open Camera</button>
+
+        <video id="video" width="100%" height="200" autoplay></video>
+
+        <button onclick="takePhoto()">Take Photo</button>
+
+        <canvas id="canvas" style="display:none;"></canvas>
+
+        <img id="preview" width="100%">
+    </div>
+
+    <div class="loading" id="loading">Submitting Complaint...</div>
+
+    <button class="submit-btn" id="submitBtn" onclick="submitComplaint()">Submit Complaint</button>
+
+</div>
+
+<script>
+let stream = null;
+let capturedImage = "";
+let latitude = "";
+let longitude = "";
+
+/* LOGIN CHECK */
+window.onload = function () {
+    let user = localStorage.getItem("user");
+    if (!user) {
+        alert("Please login first");
+        window.location.href = "login.html";
+    }
+};
+
+/* LOGOUT */
+function logout() {
+    localStorage.removeItem("user");
+}
+
+/* CAMERA */
+function startCamera() {
+    navigator.mediaDevices.getUserMedia({ video: true })
+    .then(s => {
+        stream = s;
+        document.getElementById("video").srcObject = stream;
+    })
+    .catch(() => alert("Camera permission denied"));
+}
+
+function takePhoto() {
+    if (!stream) {
+        alert("Open camera first!");
+        return;
+    }
+
+    let video = document.getElementById("video");
+    let canvas = document.getElementById("canvas");
+    let preview = document.getElementById("preview");
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    let ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0);
+
+    capturedImage = canvas.toDataURL("image/png");
+    preview.src = capturedImage;
+
+    stream.getTracks().forEach(track => track.stop());
+    stream = null;
+}
+
+/* GPS */
+function getLocation() {
+    navigator.geolocation.getCurrentPosition(
+        pos => {
+            latitude = pos.coords.latitude;
+            longitude = pos.coords.longitude;
+
+            document.getElementById("locationText").innerText =
+                `Lat: ${latitude}, Lng: ${longitude}`;
+        },
+        () => alert("Location permission denied")
+    );
+}
+
+/* SUBMIT */
+async function submitComplaint(){
+
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let issue = document.getElementById("issue").value;
+    let description = document.getElementById("description").value;
+
+    if(!name || !issue){
+        alert("Name and Issue required ❌");
+        return;
+    }
+
+    let formData = new FormData();
+
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("issue", issue);
+    formData.append("description", description);
+
+    let canvas = document.getElementById("canvas");
+
+    if(canvas){
+        try {
+            let imageData = canvas.toDataURL("image/png");
+            let blob = await fetch(imageData).then(res => res.blob());
+            formData.append("image", blob, "photo.png");
+        } catch(e){
+            console.log("Image skip");
+        }
+    }
+
+    try {
+        let res = await fetch("http://localhost:8081/complaint/add", {
+            method: "POST",
+            body: formData
+        });
+
+        let text = await res.text();
+
+        if(res.ok){
+            alert("Complaint Submitted ✅");
+            window.location.href = "dashboard.html";
+        } else {
+            alert("Failed ❌ " + text);
+        }
+
+    } catch(err){
+        console.error(err);
+        alert("Server Error ❌");
+    }
+}
+</script>
+
+</body>
+</html>

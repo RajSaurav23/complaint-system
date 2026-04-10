@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact Us - JanSeva</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f6f9;
+}
+
+/* HEADER */
+.header {
+    background: #1f4e9e;
+    color: white;
+    padding: 15px 40px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* BREADCRUMB */
+.breadcrumb {
+    padding: 15px 40px;
+    font-size: 14px;
+    color: gray;
+}
+
+/* CONTAINER */
+.container {
+    padding: 20px 40px;
+}
+
+h1 {
+    font-size: 40px;
+    color: #2c3e50;
+}
+
+.line {
+    height: 2px;
+    background: #ddd;
+    margin: 15px 0 25px;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #333;
+}
+
+/* ADDRESS BOX */
+.address-box {
+    margin-top: 20px;
+    padding: 20px;
+    background: #fff;
+    border-left: 5px solid #1f4e9e;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.address-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* FOOTER */
+.footer {
+    margin-top: 40px;
+    padding: 20px;
+    text-align: center;
+    background: #222;
+    color: white;
+}
+
+.footer a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: #00e5ff;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+JanSeva Complaint Portal
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+    Home >> Contact Us
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+
+    <h1>Contact Us</h1>
+    <div class="line"></div>
+
+    <p>
+        This is the JanSeva Complaint Management Portal designed to provide a single platform 
+        for citizens to register and track complaints efficiently.
+    </p>
+
+    <p>
+        The objective of this portal is to improve transparency, efficiency, and accessibility 
+        in public service complaint handling.
+    </p>
+
+    <!-- ADDRESS -->
+    <div class="address-box">
+        <div class="address-title">Address:</div>
+        <strong>Name:</strong> Saurav Raj<br>
+        <strong>Role:</strong> Web Information Manager / Developer<br><br>
+        
+        JanSeva Complaint Portal<br>
+        National Informatics Centre (NIC)<br>
+        A245, Block A , Beta 1<br>
+        Greater Noida<br>
+        Uttar Pradesh - 201310<br><br>
+
+        Email: jansevasaurav@gmail.com<br>
+        Email: janaseva@zohomail.in<br>
+        Phone: +91-7541035500 <br>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <a href="about.html">About</a>
+    <a href="help.html">Help</a>
+    <a href="terms.html">Terms</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="contact.html">Contact</a>
+
+    <p style="margin-top:10px;">
+        © <span id="year"></span> JanSeva Portal | Government Complaint System
+    </p>
+</div>
+
+<script>
+document.getElementById("year").innerText = new Date().getFullYear();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Complaint Summary</title>
+
+<style>
+body {
+    font-family: 'Segoe UI';
+    background: linear-gradient(135deg,#1e3c72,#2a5298);
+    margin: 0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+/* CARD */
+.card {
+    width: 500px;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+/* TITLE */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* FIELD */
+.field {
+    margin: 12px 0;
+    font-size: 16px;
+}
+
+.label {
+    font-weight: bold;
+}
+
+/* BADGE */
+.badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    color: white;
+}
+
+.pending { background: orange; }
+.progress { background: blue; }
+.resolved { background: green; }
+
+/* ===== TIMELINE ===== */
+.timeline {
+    display:flex;
+    justify-content:space-between;
+    margin: 20px 0;
+}
+
+.timeline div {
+    padding:10px;
+    background:#ccc;
+    border-radius:10px;
+    flex:1;
+    text-align:center;
+    margin:0 5px;
+    color:black;
+    transition:0.3s;
+}
+
+/* 🔥 FORCE COLOR */
+.active {
+    background: #28a745 !important;
+    color: white !important;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(40,167,69,0.7);
+}
+
+/* BUTTON */
+.back {
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px;
+    background: #2a5298;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.back:hover {
+    background: #1e3c72;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h2>Complaint Summary</h2>
+
+    <!-- 🔥 TIMELINE -->
+    <div class="timeline">
+        <div id="step1">Pending</div>
+        <div id="step2">In Progress</div>
+        <div id="step3">Resolved</div>
+    </div>
+
+    <div class="field"><span class="label">ID:</span> <span id="id"></span></div>
+    <div class="field"><span class="label">Name:</span> <span id="name"></span></div>
+    <div class="field"><span class="label">Email:</span> <span id="email"></span></div>
+    <div class="field"><span class="label">Issue:</span> <span id="issue"></span></div>
+    <div class="field"><span class="label">Description:</span> <span id="description"></span></div>
+    <div class="field"><span class="label">Date:</span> <span id="date"></span></div>
+    <div class="field"><span class="label">Status:</span> <span id="status"></span></div>
+
+    <button class="back" onclick="goBack()">⬅ Back to Dashboard</button>
+
+</div>
+
+<script>
+
+function getBadge(status){
+    if(status==="PENDING") return '<span class="badge pending">Pending</span>';
+    if(status==="IN_PROGRESS") return '<span class="badge progress">In Progress</span>';
+    if(status==="RESOLVED") return '<span class="badge resolved">Resolved</span>';
+}
+
+function goBack(){
+    window.location.href="dashboard.html";
+}
+
+async function loadDetails(){
+
+    let id = localStorage.getItem("complaintId");
+
+    let res = await fetch("http://localhost:8081/complaint/all");
+    let data = await res.json();
+
+    console.log("Stored ID:", id);
+    console.log("All Data:", data);
+
+    let c = data.find(x => String(x.id) === String(id));
+
+    if(!c){
+        alert("Complaint not found ❌");
+        return;
+    }
+
+    // ===== SHOW DATA =====
+    document.getElementById("id").innerText = c.id;
+    document.getElementById("name").innerText = c.name;
+    document.getElementById("email").innerText = c.email || "N/A";
+    document.getElementById("issue").innerText = c.issue;
+    document.getElementById("description").innerText = c.description || "No description";
+    document.getElementById("date").innerText = c.date || "N/A";
+    document.getElementById("status").innerHTML = getBadge(c.status);
+
+    // ===== TIMELINE =====
+    let step1 = document.getElementById("step1");
+    let step2 = document.getElementById("step2");
+    let step3 = document.getElementById("step3");
+
+    // 🔥 RESET पहले
+    step1.classList.remove("active");
+    step2.classList.remove("active");
+    step3.classList.remove("active");
+
+    // 🔥 STATUS normalize (VERY IMPORTANT FIX)
+    let status = (c.status || "")
+        .toUpperCase()
+        .replace(/\s+/g, "_");   // handles "IN PROGRESS"
+
+    console.log("STATUS:", status);
+
+    // 🔥 APPLY COLOR
+    if(status === "PENDING"){
+        step1.classList.add("active");
+    }
+    else if(status === "IN_PROGRESS"){
+        step1.classList.add("active");
+        step2.classList.add("active");
+    }
+    else if(status === "RESOLVED"){
+        step1.classList.add("active");
+        step2.classList.add("active");
+        step3.classList.add("active");
+    }
+}
+
+loadDetails();
+
+</script>
+
+</body>
+</html>
