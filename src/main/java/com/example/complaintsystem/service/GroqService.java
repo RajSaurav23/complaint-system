@@ -14,8 +14,13 @@ public class GroqService {
     String url = "https://api.groq.com/openai/v1/chat/completions";
 
     RestTemplate restTemplate = new RestTemplate();
+   String cleanPrompt = prompt
+        .replace("\"", "'")     // fix quotes
+        .replace("\n", " ")     // remove new lines
+        .replace("\r", " ");    // remove carriage return
 
-    String body = """
+String body = String.format("""
+    
 {
   "model": "llama-3.1-8b-instant",
   "messages": [
@@ -29,7 +34,7 @@ public class GroqService {
     }
   ]
 }
-""".formatted(prompt.replace("\"", ""));
+""", cleanPrompt);
    
 
     HttpHeaders headers = new HttpHeaders();

@@ -134,7 +134,8 @@ function submitFeedback(){
 
     if(!valid) return;
 
-    fetch("http://localhost:8081/feedback", {
+    //fetch("http://localhost:8081/feedback", {
+    fetch("/feedback", {
         method:"POST",
         headers:{ "Content-Type":"application/json" },
         body: JSON.stringify({

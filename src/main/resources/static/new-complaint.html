@@ -2,7 +2,8 @@
 <html>
 <head>
     <title>New Complaint</title>
-
+<!-- 🔥 TAB ICON -->
+    <link rel="icon" type="image/png" href="logo.png">
     <style>
         body {
             margin: 0;
@@ -264,7 +265,8 @@ async function submitComplaint(){
     }
 
     try {
-        let res = await fetch("http://localhost:8081/complaint/add", {
+        //let res = await fetch("http://localhost:8081/complaint/add", {
+        let res = await fetch("/complaint/add", {
             method: "POST",
             body: formData
         });

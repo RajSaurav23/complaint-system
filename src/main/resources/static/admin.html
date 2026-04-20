@@ -2,7 +2,8 @@
 <html>
 <head>
     <title>Admin Dashboard</title>
-
+<!-- 🔥 TAB ICON -->
+    <link rel="icon" type="image/png" href="logo.png">
     <style>
         body {
             margin: 0;
@@ -10,7 +11,16 @@
             background: linear-gradient(135deg,#1e3c72,#2a5298);
             color: white;
         }
+/* ===== LOGO ===== */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+}
 
+.logo img {
+    height: 45px;
+}
         .header {
             display: flex;
             justify-content: space-between;
@@ -81,7 +91,10 @@
 <body>
 
 <div class="header">
-    <h2>👨‍💼 Admin Dashboard</h2>
+     <div class="logo">
+            <img src="logo.png" alt="logo">
+        </div>
+    <h2>Admin Dashboard</h2>
     <div>
         <!-- ✅ Added Feedback Button -->
         <button onclick="openFeedback()">📩 Feedback</button>
@@ -113,8 +126,8 @@ if(user){
 
 /* ================= LOAD ================= */
 function loadComplaints(){
-
-    fetch("http://localhost:8081/complaint/all")
+    fetch("/complaint/all")
+   // fetch("http://localhost:8081/complaint/all")
     .then(res => res.json())
     .then(data => {
 
@@ -189,8 +202,8 @@ function loadComplaints(){
 
 /* ================= STATUS ================= */
 function updateStatus(id, status){
-
-    fetch(`http://localhost:8081/complaint/update/${id}/${status}`,{
+    fetch(`/complaint/update/${id}/${status}`, {
+   // fetch(`http://localhost:8081/complaint/update/${id}/${status}`,{
         method:"PUT"
     })
     .then(res => res.text())
@@ -209,8 +222,8 @@ function deleteComplaint(id){
     console.log("Deleting ID:", id);
 
     if(!confirm("Delete this complaint?")) return;
-
-    fetch(`http://localhost:8081/complaint/delete/${id}`,{
+    fetch(`/complaint/delete/${id}`, {
+   // fetch(`http://localhost:8081/complaint/delete/${id}`,{
         method:"DELETE"
     })
     .then(res => res.text())

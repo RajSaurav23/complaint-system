@@ -21,7 +21,8 @@
 document.getElementById("complaintForm").addEventListener("submit", function(e) {
     e.preventDefault();
 
-    fetch("http://localhost:8081/complaint/add", {
+    //fetch("http://localhost:8081/complaint/add", {
+    fetch("/complaint/add", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

@@ -27,7 +27,7 @@
 
         <select id="role">
             <option value="USER">User</option>
-            <option value="ADMIN">Admin</option>
+            
         </select>
 
         <!-- ✅ FIXED -->
@@ -60,7 +60,8 @@ function register(){
 
     console.log("Sending Data (register):", data); // ✅ DEBUG
 
-    fetch("http://localhost:8081/register", {
+    //fetch("http://localhost:8081/register", {
+    fetch("/register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -102,7 +103,8 @@ function registerUser() {
 
     console.log("Sending Data (registerUser):", data); // ✅ DEBUG
 
-    fetch("http://localhost:8081/user/register", {
+    //fetch("http://localhost:8081/user/register", {
+    fetch("/user/register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

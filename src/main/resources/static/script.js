@@ -1,4 +1,5 @@
-fetch("http://localhost:8081/complaint/all")
+//fetch("http://localhost:8081/complaint/all")
+fetch("/complaint/all")
 .then(function(res) {
     return res.json();
 })

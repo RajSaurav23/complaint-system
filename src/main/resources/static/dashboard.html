@@ -4,7 +4,8 @@
 <title>JanSeva Dashboard</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+  <!-- 🔥 TAB ICON -->
+    <link rel="icon" type="image/png" href="logo.png">
 <style>
 
 /* ===== BODY ===== */
@@ -138,6 +139,19 @@ tr:hover { background: #f5f5f5; }
     </div>
 
     <div>
+        <!-- 🔔 Notification -->
+        <span id="notificationBadge" style="
+            background:red;
+            color:white;
+            padding:5px 10px;
+            border-radius:20px;
+            margin-right:10px;
+            display:none;
+            cursor:pointer;
+        ">
+            🔔 0 High Priority
+        </span>
+
         <button class="issue-btn" onclick="goToIssueDashboard()">📊 Issue Dashboard</button>
         <button class="add-btn" onclick="goToAdd()">+ Add Complaint</button>
         <button class="logout-btn" onclick="logout()">Logout</button>
@@ -151,10 +165,8 @@ tr:hover { background: #f5f5f5; }
     <div class="card purple" onclick="loadByStatus('RESOLVED')"><h2 id="resolved">0</h2>Resolved</div>
 </div>
 
-<!-- 🔥 ALERT BOX -->
-<div id="alertBox" style="margin:20px; padding:15px; background:#ff4d4d; color:white; border-radius:10px; display:none;">
-    ⚠️ High Priority Complaints Detected!
-</div>
+<!-- 🔥 ALERT BOX (kept but hidden permanently) -->
+<div id="alertBox" style="display:none;"></div>
 
 <!-- 🤖 AI INSIGHTS -->
 <div style="margin:20px; padding:15px; background:#fff; border-radius:10px;">
@@ -211,9 +223,11 @@ async function loadByStatus(status){
     let url = "";
 
     if(status==="ALL"){
-        url = "http://localhost:8081/complaint/all";
+         url = "/complaint/all";
+       // url = "http://localhost:8081/complaint/all";
     } else {
-        url = `http://localhost:8081/dashboard/status/${status}`;
+            url = `/dashboard/status/${status}`;
+       // url = `http://localhost:8081/dashboard/status/${status}`;
     }
 
     let res = await fetch(url);
@@ -241,7 +255,8 @@ function renderTable(list){
 
 async function loadDashboard(){
 
-    let res = await fetch("http://localhost:8081/dashboard");
+    //let res = await fetch("http://localhost:8081/dashboard");
+    let res = await fetch("/dashboard");
     let data = await res.json();
 
     document.getElementById("total").innerText=data.total;
@@ -270,26 +285,38 @@ async function loadDashboard(){
 
 /* 🤖 AI */
 async function loadAIInsight() {
-    let res = await fetch("http://localhost:8081/dashboard/ai-insight");
+    //let res = await fetch("http://localhost:8081/dashboard/ai-insight");
+    let res = await fetch("/dashboard/ai-insight");
     let data = await res.text();
     document.getElementById("aiInsight").innerText = data;
 }
 
-/* 🔥 ALERT */
-async function checkAlerts() {
-    let res = await fetch("http://localhost:8081/complaint/all");
+/* 🔔 NEW NOTIFICATION SYSTEM */
+async function loadNotifications() {
+   // let res = await fetch("http://localhost:8081/complaint/all");
+    let res = await fetch("/complaint/all");
     let data = await res.json();
 
     let high = data.filter(c => c.priority === "HIGH");
 
+    let badge = document.getElementById("notificationBadge");
+
     if(high.length > 0){
-        document.getElementById("alertBox").style.display = "block";
+        badge.style.display = "inline-block";
+        badge.innerText = "🔔 " + high.length + " High Priority";
+
+        // optional click action
+        badge.onclick = () => loadByStatus("HIGH");
+
+    } else {
+        badge.style.display = "none";
     }
 }
 
+/* INIT */
 loadDashboard();
 loadAIInsight();
-checkAlerts();
+loadNotifications();
 
 /* 🤖 CHATBOT */
 function toggleChat(){
@@ -339,7 +366,7 @@ display:none;
 ">
 
 <div style="padding:10px; background:#2979ff; color:white; border-radius:10px 10px 0 0;">
-🤖 AI Chatbot
+🤖 JanaSeva Chatbot
 </div>
 
 <div id="chatMessages" style="height:200px; overflow-y:auto; padding:10px;"></div>
