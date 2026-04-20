@@ -7,8 +7,8 @@ import org.springframework.http.*;
 @Service
 public class GroqService {
 
-    private final String API_KEY = "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";
-
+   // private final String API_KEY = "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";
+    private final String API_KEY = System.getenv("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");
    public String askAI(String prompt) {
 
     String url = "https://api.groq.com/openai/v1/chat/completions";
@@ -28,7 +28,7 @@ String body = String.format("""
       "role": "system",
       "content": "You are a smart complaint management assistant. Understand Hindi and English. Give short, clear answers."
     },
-    {
+    {"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"
       "role": "user",
       "content": "%s"
     }
