@@ -1,5 +1,5 @@
-# Use Java 17
-FROM openjdk:17-jdk-slim
+# Use Java 17 (correct image)
+FROM eclipse-temurin:17-jdk
 
 # Copy jar file
 COPY target/complaintsystem.jar app.jar
