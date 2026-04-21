@@ -1,8 +1,18 @@
-# Use Java 17 (correct image)
-FROM eclipse-temurin:17-jdk
+# Step 1: Build JAR
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 
-# Copy jar file
-COPY target/complaintsystem.jar app.jar
+WORKDIR /app
 
-# Run app
-ENTRYPOINT ["java","-jar","/app.jar"]
+COPY pom.xml .
+RUN mvn dependency:go-offline
+
+COPY . .
+RUN mvn clean package -DskipTests
+
+# Step 2: Run app
+FROM eclipse-temurin:17-jre
+
+WORKDIR /app
+COPY --from=build /app/target/my-app.jar app.jar
+
+ENTRYPOINT ["java","-XX:+UseContainerSupport","-XX:MaxRAMPercentage=75.0","-jar","app.jar"]
