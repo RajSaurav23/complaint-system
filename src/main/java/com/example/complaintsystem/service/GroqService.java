@@ -8,7 +8,7 @@ import org.springframework.http.*;
 public class GroqService {
 
    // private final String API_KEY = "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";
-    private final String API_KEY = System.getenv("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");
+   private final String API_KEY = System.getenv("GROQ_API_KEY");
    public String askAI(String prompt) {
 
     String url = "https://api.groq.com/openai/v1/chat/completions";
