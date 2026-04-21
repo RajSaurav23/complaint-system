@@ -138,7 +138,7 @@ async function loadDetails(){
     let id = localStorage.getItem("complaintId");
 
    // let res = await fetch("http://localhost:8081/complaint/all");
-    let res = await fetch("/complaint/all");
+    let res = await fetch("https://janseva-14xr.onrender.com/complaint/all");
     let data = await res.json();
 
     console.log("Stored ID:", id);

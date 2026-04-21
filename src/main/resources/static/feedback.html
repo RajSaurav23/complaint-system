@@ -135,7 +135,7 @@ function submitFeedback(){
     if(!valid) return;
 
     //fetch("http://localhost:8081/feedback", {
-    fetch("/feedback", {
+    fetch("https://janseva-14xr.onrender.com/feedback", {
         method:"POST",
         headers:{ "Content-Type":"application/json" },
         body: JSON.stringify({

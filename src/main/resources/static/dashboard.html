@@ -223,10 +223,10 @@ async function loadByStatus(status){
     let url = "";
 
     if(status==="ALL"){
-         url = "/complaint/all";
+         url = "https://janseva-14xr.onrender.com/complaint/all";
        // url = "http://localhost:8081/complaint/all";
     } else {
-            url = `/dashboard/status/${status}`;
+            url = `https://janseva-14xr.onrender.com/dashboard/status/${status}`;
        // url = `http://localhost:8081/dashboard/status/${status}`;
     }
 
@@ -256,7 +256,7 @@ function renderTable(list){
 async function loadDashboard(){
 
     //let res = await fetch("http://localhost:8081/dashboard");
-    let res = await fetch("/dashboard");
+    let res = await fetch("https://janseva-14xr.onrender.com/dashboard");
     let data = await res.json();
 
     document.getElementById("total").innerText=data.total;
@@ -286,7 +286,7 @@ async function loadDashboard(){
 /* 🤖 AI */
 async function loadAIInsight() {
     //let res = await fetch("http://localhost:8081/dashboard/ai-insight");
-    let res = await fetch("/dashboard/ai-insight");
+    let res = await fetch("https://janseva-14xr.onrender.com/dashboard/ai-insight");
     let data = await res.text();
     document.getElementById("aiInsight").innerText = data;
 }
@@ -332,7 +332,7 @@ async function sendMessage(){
 
     chat.innerHTML += `<div><b>You:</b> ${msg}</div>`;
 
-    let res = await fetch("http://localhost:8081/chatbot/ask",{
+    let res = await fetch("https://janseva-14xr.onrender.com/chatbot/ask",{
         method:"POST",
         headers:{ "Content-Type":"text/plain" },
         body: msg

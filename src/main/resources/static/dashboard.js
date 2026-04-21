@@ -3,7 +3,7 @@ let pieChart, barChart;
 /* ================= UPDATE STATUS ================= */
 function updateStatus(id, status) {
 
-    fetch(`http://localhost:8081/complaint/update/${id}/${status}`, {
+    fetch(`https://janseva-14xr.onrender.com/complaint/update/${id}/${status}`, {
         method: "PUT"
     })
     .then(res => res.text())
@@ -36,7 +36,7 @@ function addComplaint() {
         return;
     }
 
-    fetch("http://localhost:8081/complaint/add", {
+    fetch("https://janseva-14xr.onrender.com/complaint/add", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -67,7 +67,7 @@ function logout() {
 /* ================= LOAD DASHBOARD ================= */
 function loadDashboard() {
 
-    fetch("http://localhost:8081/dashboard")
+    fetch("https://janseva-14xr.onrender.com/dashboard")
     .then(res => res.json())
     .then(data => {
 

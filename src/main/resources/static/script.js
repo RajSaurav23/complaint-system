@@ -1,5 +1,5 @@
 //fetch("http://localhost:8081/complaint/all")
-fetch("/complaint/all")
+fetch("https://janseva-14xr.onrender.com/complaint/all")
 .then(function(res) {
     return res.json();
 })

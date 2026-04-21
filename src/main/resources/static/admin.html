@@ -126,7 +126,8 @@ if(user){
 
 /* ================= LOAD ================= */
 function loadComplaints(){
-    fetch("/complaint/all")
+    
+    fetch("https://janseva-14xr.onrender.com/complaint/all")
    // fetch("http://localhost:8081/complaint/all")
     .then(res => res.json())
     .then(data => {
