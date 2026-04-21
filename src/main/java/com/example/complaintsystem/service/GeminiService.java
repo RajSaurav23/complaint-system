@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 @Service
 public class GeminiService {
 
-    private final String API_KEY = "AIzaSyASffhgNjE3BZjuhTUvxoPHWJV7SgVNl64";
+    private final String API_KEY = " " + System.getenv("GEMINI_API_KEY");
 
     public String askAI(String prompt) {
 
