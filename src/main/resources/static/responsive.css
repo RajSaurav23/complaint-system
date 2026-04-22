@@ -1,0 +1,92 @@
+/* ================= GLOBAL RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    /* CONTAINER */
+    .container {
+        width: 95% !important;
+        margin: 10px auto !important;
+        padding: 10px !important;
+    }
+
+    /* FLEX FIX */
+    .container,
+    .card-container,
+    .charts,
+    .buttons,
+    .navbar,
+    .menu {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 10px;
+    }
+
+    /* PANELS */
+    .left-panel,
+    .right-panel {
+        width: 100% !important;
+        border-radius: 0 !important;
+    }
+
+    /* CARDS */
+    .card {
+        width: 100% !important;
+    }
+
+    /* TEXT */
+    h1 {
+        font-size: 24px !important;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 20px !important;
+        text-align: center;
+    }
+
+    p {
+        font-size: 14px !important;
+    }
+
+    /* BUTTON */
+    button {
+        width: 100% !important;
+    }
+
+    /* TABLE */
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        font-size: 12px;
+    }
+
+    /* CHART */
+    canvas {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    /* LOGO */
+    .logo img {
+        height: 40px !important;
+    }
+
+    /* FORM */
+    input, textarea, select {
+        width: 100% !important;
+        font-size: 14px;
+    }
+
+    /* VIDEO */
+    video {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+}
