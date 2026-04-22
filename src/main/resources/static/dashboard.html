@@ -227,7 +227,7 @@ async function loadByStatus(status){
          url = "https://janseva-14xr.onrender.com/complaint/all";
        // url = "http://localhost:8081/complaint/all";
     } else {
-            url = `https://janseva-14xr.onrender.com/dashboard/status/${status}`;
+            url = `https://janseva-14xr.onrender.com/api/dashboard/status/${status}`;
        // url = `http://localhost:8081/dashboard/status/${status}`;
     }
 
@@ -257,7 +257,7 @@ function renderTable(list){
 async function loadDashboard(){
 
     //let res = await fetch("http://localhost:8081/dashboard");
-    let res = await fetch("https://janseva-14xr.onrender.com/dashboard");
+    let res = await fetch("https://janseva-14xr.onrender.com/api/dashboard");
     let data = await res.json();
 
     document.getElementById("total").innerText=data.total;
@@ -287,7 +287,7 @@ async function loadDashboard(){
 /* 🤖 AI */
 async function loadAIInsight() {
     //let res = await fetch("http://localhost:8081/dashboard/ai-insight");
-    let res = await fetch("https://janseva-14xr.onrender.com/dashboard/ai-insight");
+    let res = await fetch("https://janseva-14xr.onrender.com/api/dashboard/ai-insight");
     let data = await res.text();
     document.getElementById("aiInsight").innerText = data;
 }
@@ -295,7 +295,7 @@ async function loadAIInsight() {
 /* 🔔 NEW NOTIFICATION SYSTEM */
 async function loadNotifications() {
    // let res = await fetch("http://localhost:8081/complaint/all");
-    let res = await fetch("/complaint/all");
+    let res = await fetch("https://janseva-14xr.onrender.com/complaint/all");
     let data = await res.json();
 
     let high = data.filter(c => c.priority === "HIGH");
