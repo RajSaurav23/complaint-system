@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>New Complaint</title>
-<!-- 🔥 TAB ICON -->
+
     <link rel="icon" type="image/png" href="logo.png">
+
     <style>
         body {
             margin: 0;
@@ -102,6 +103,13 @@
             color: green;
             display: none;
         }
+
+        #cameraMode {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
     </style>
 </head>
 
@@ -125,7 +133,6 @@
     <label>Email</label>
     <input type="email" id="email">
 
-    <!-- ✅ UPDATED DROPDOWN -->
     <label>Issue</label>
     <select id="issue">
         <option value="">-- Select Issue --</option>
@@ -138,16 +145,19 @@
     <label>Description</label>
     <textarea id="description"></textarea>
 
-    <!-- GPS -->
     <div class="gps-box">
         <h4>📍 Capture GPS Location</h4>
         <button class="gps-btn" onclick="getLocation()">Get Location</button>
         <p id="locationText">Location not captured</p>
     </div>
 
-    <!-- CAMERA -->
     <div class="camera-box">
         <h4>📷 Capture Photo</h4>
+
+        <select id="cameraMode">
+            <option value="environment">Back Camera 📷</option>
+            <option value="user">Front Camera 🤳</option>
+        </select>
 
         <button class="camera-btn" onclick="startCamera()">Open Camera</button>
 
@@ -181,19 +191,29 @@ window.onload = function () {
     }
 };
 
-/* LOGOUT */
 function logout() {
     localStorage.removeItem("user");
 }
 
 /* CAMERA */
 function startCamera() {
-    navigator.mediaDevices.getUserMedia({ video: true })
+    let mode = document.getElementById("cameraMode").value;
+
+    navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { exact: mode } }
+    })
     .then(s => {
         stream = s;
         document.getElementById("video").srcObject = stream;
     })
-    .catch(() => alert("Camera permission denied"));
+    .catch(() => {
+        navigator.mediaDevices.getUserMedia({ video: true })
+        .then(s => {
+            stream = s;
+            document.getElementById("video").srcObject = stream;
+        })
+        .catch(() => alert("Camera permission denied"));
+    });
 }
 
 function takePhoto() {
@@ -233,6 +253,43 @@ function getLocation() {
     );
 }
 
+/* ✅ NEW VALIDATION FUNCTION */
+function validateForm(name, email, issue, description) {
+
+    if (!name || name.trim().length < 3) {
+        alert("Enter valid name (min 3 characters)");
+        return false;
+    }
+
+    let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    if (!email || !email.match(emailPattern)) {
+        alert("Enter valid email ❌");
+        return false;
+    }
+
+    if (!issue) {
+        alert("Please select issue ❌");
+        return false;
+    }
+
+    if (!description || description.trim().length < 5) {
+        alert("Description too short ❌");
+        return false;
+    }
+
+    if (!latitude || !longitude) {
+        alert("Capture GPS location ❌");
+        return false;
+    }
+
+    if (!capturedImage) {
+        alert("Capture photo ❌");
+        return false;
+    }
+
+    return true;
+}
+
 /* SUBMIT */
 async function submitComplaint(){
 
@@ -241,8 +298,8 @@ async function submitComplaint(){
     let issue = document.getElementById("issue").value;
     let description = document.getElementById("description").value;
 
-    if(!name || !issue){
-        alert("Name and Issue required ❌");
+    /* 🔥 VALIDATION ADDED */
+    if (!validateForm(name, email, issue, description)) {
         return;
     }
 
@@ -252,21 +309,20 @@ async function submitComplaint(){
     formData.append("email", email);
     formData.append("issue", issue);
     formData.append("description", description);
+    formData.append("latitude", latitude);
+    formData.append("longitude", longitude);
 
     let canvas = document.getElementById("canvas");
 
-    if(canvas){
-        try {
-            let imageData = canvas.toDataURL("image/png");
-            let blob = await fetch(imageData).then(res => res.blob());
-            formData.append("image", blob, "photo.png");
-        } catch(e){
-            console.log("Image skip");
-        }
+    try {
+        let imageData = canvas.toDataURL("image/png");
+        let blob = await fetch(imageData).then(res => res.blob());
+        formData.append("image", blob, "photo.png");
+    } catch(e){
+        console.log("Image skip");
     }
 
     try {
-        //let res = await fetch("http://localhost:8081/complaint/add", {
         let res = await fetch("https://janseva-14xr.onrender.com/complaint/add", {
             method: "POST",
             body: formData
