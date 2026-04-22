@@ -163,7 +163,7 @@ async function loadIssue(type){
     document.getElementById("title").innerText = type.toUpperCase() + " ISSUE";
 
     //let res = await fetch("http://localhost:8081/dashboard");
-    let res = await fetch("https://janseva-14xr.onrender.com/dashboard");
+    let res = await fetch("https://janseva-14xr.onrender.com/api/dashboard");
     let data = await res.json();
 
     // FILTER
